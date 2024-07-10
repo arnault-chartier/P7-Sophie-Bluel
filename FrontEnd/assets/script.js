@@ -107,3 +107,32 @@ async function displayFilterButtons() {
 }
 // Appel de la fonction d'affichage des boutons de filtres
 displayFilterButtons();
+
+// Fonction "mode édition" qui s'active quand utilisateur connecté
+function editionMode() {
+    // Récupération du token éventuellement stocké dans le localStorage
+    const token = window.localStorage.getItem("token");
+    // Passage en "mode édition" si token existant dans le localStorage
+    if (token != null) {
+        // Affichage du bandeau noir pour le "mode édition"
+        document.getElementById("edition_banner").style.display = "flex";
+        // Changement du lien de la nav "login" en "logout"
+        const logInOut = document.querySelectorAll("header a")[2]
+        logInOut.innerText = "logout";
+        logInOut.href = "#";
+        // Création et affichage du bouton "modifier"
+        const modifyButton = document.createElement("button");
+        modifyButton.type = "button";
+        modifyButton.innerText = "modifier";
+        document.querySelector("#portfolio h2").appendChild(modifyButton);
+        // Event listener sur le lien "logout"
+        logInOut.addEventListener("click", () => {
+            // Suppression du token dans le localStorage
+            window.localStorage.removeItem("token");
+            // Redirection dur la page d'accueil
+            window.location.href = "./index.html";
+        })
+    }
+}
+// Appel de la fonction "mode édition"
+editionMode();
