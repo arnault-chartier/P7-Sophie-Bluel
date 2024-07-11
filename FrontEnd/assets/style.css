@@ -142,21 +142,6 @@ body {
 	font-size: 14px;
 }
 
-#edition_banner {
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	height: 59px;
-	background-color: black;
-}
-
-#edition_banner p {
-	font-family: 'Work Sans';
-	font-size: 16px;
-	font-weight: 400;
-	color: white;
-}
-
 header {
 	display: flex;
 	justify-content: space-between;
@@ -194,6 +179,7 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
+	/* Ajout du gap pour augmenter l'espacement entre les liens de la nav */
 	gap: 30px;
 
 }
@@ -203,16 +189,16 @@ nav li {
 	font-size: 1.2em;
 }
 
+/* Liens de la nav */
 li a {
 	text-decoration: none;
 	color: black;
 }
 
+/* Hover des liens de la nav */
 li a:hover {
-	color: #B1663C;
+	font-weight: bold;
 }
-
-
 
 #introduction {
 	display: flex;
@@ -242,23 +228,15 @@ li a:hover {
 }
 
 #portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
+	/* Changement de propriétés pour l'intégration du bouton "modifier" */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 4em;
+	margin-bottom: 2em;
 }
 
-#portfolio h2>button {
-	border: none;
-	background-color: white;
-	font-family: "Work Sans";
-	color: black;
-	padding: 0 20px;
-	font-size: 14px;
-}
-
-#portfolio h2>button:hover {
-	color: #B1663C;
-}
-
+/* Barre de filtres */
 #filterbar {
 	display: flex;
 	justify-content: center;
@@ -266,7 +244,8 @@ li a:hover {
 	margin-bottom: 50px;
 }
 
-.filterbar_button {
+/* Boutons de filtres */
+.filterbar-button {
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 1em;
@@ -275,8 +254,10 @@ li a:hover {
 	border: 1px solid #1D6154;
 	border-radius: 60px;
 	background-color: white;
+	cursor: pointer;
 }
 
+/* Highlight du bouton de filtre sélectionné */
 .highlight {
 	background-color: #1D6154;
 	color: white;
@@ -332,45 +313,6 @@ li a:hover {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-#login {
-	width: 33%;
-	margin: auto;
-	margin-bottom: 30%;
-}
-
-#login>* {
-	text-align: center;
-}
-
-#login h2 {
-	padding-top: 100px;
-	margin-bottom: 20px;
-}
-
-#login form {
-	text-align: left;
-	margin-top: 30px;
-	display: flex;
-	flex-direction: column;
-}
-
-#login input {
-	height: 50px;
-	font-size: 1.2em;
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
-
-#login label {
-	margin: 2em 0 1em 0;
-}
-
-#login a {
-	display: flex;
-	justify-content: center;
-	color: black;
-}
-
 input[type="submit"] {
 	font-family: 'Syne';
 	font-weight: 700;
@@ -380,6 +322,12 @@ input[type="submit"] {
 	width: 180px;
 	text-align: center;
 	border-radius: 60px;
+	cursor: pointer;
+}
+
+/* Hover sur le bouton */
+input[type="submit"]:hover {
+	background-color: #0E2F28;
 }
 
 footer nav ul {

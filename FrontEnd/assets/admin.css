@@ -1,0 +1,45 @@
+.hidden {
+    display: none;
+}
+
+.admin-mode {
+    margin-top: 109px;
+}
+
+.admin-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 11px;
+    width: 100%;
+    height: 59px;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.admin-banner p {
+    font-family: 'Work Sans';
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+}
+
+.modify-button {
+    border: none;
+    background-color: white;
+    font-family: "Work Sans";
+    color: black;
+    padding-left: 40px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.modify-button img {
+    padding-right: 10px;
+}
+
+.modify-button:hover {
+    font-weight: 800;
+}
