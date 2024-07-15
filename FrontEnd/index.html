@@ -12,8 +12,10 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<link rel="stylesheet" href="./assets/admin.css">
+	<link rel="stylesheet" href="./assets/modal.css">
 	<script type="module" src="./assets/script.js"></script>
 	<script type="module" src="./assets/admin.js"></script>
+	<script type="module" src="./assets/modal.js"></script>
 </head>
 
 <body>
@@ -81,8 +83,20 @@
 			</ul>
 		</nav>
 	</footer>
-	<dialog>
-
+	<dialog id="modify-modal">
+		<div class="modal-header">
+			<div class="modal-header_close">
+				<button autofocus class="close-button">
+					<img src="./assets/icons/close.svg" alt="icône du bouton fermer la modale">
+				</button>
+			</div>
+			<h3>Galerie photo</h3>
+		</div>
+		<div class="modal-body" id="modal-gallery"></div>
+		<div class="modal-footer">
+			<hr>
+			<button>Ajouter une photo</button>
+		</div>
 	</dialog>
 </body>
 

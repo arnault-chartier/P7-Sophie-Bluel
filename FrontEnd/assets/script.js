@@ -4,7 +4,7 @@ function deleteWorks() {
 }
 
 // Fonction de récupération des projets depuis l'API
-async function getWorks() {
+export async function getWorks() {
     const worksResponse = await fetch("http://localhost:5678/api/works");
     const works = await worksResponse.json();
     return works;
