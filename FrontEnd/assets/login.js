@@ -29,8 +29,14 @@ loginForm.addEventListener("submit", async function (event) {
         // Redirection sur la page d'accueil
         window.location.href = "./index.html";
     } else { // Si la réponse de l'API est négative (email et/ou mot de passe incorrects)
+        // Suppression d'un éventuel message d'erreur existant
+        const previousErrorMessage = document.getElementById("error-message");
+        if (previousErrorMessage != null) {
+            previousErrorMessage.remove();
+        }
         // Création de la balise <p> pour afficher le message d'erreur
         const errorMessage = document.createElement("p");
+        errorMessage.id = "error-message";
         errorMessage.innerText = "Erreur dans l’identifiant ou le mot de passe";
         // Rattachement de la balise au parent
         document.getElementById("login").appendChild(errorMessage);

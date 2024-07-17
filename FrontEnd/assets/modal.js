@@ -1,19 +1,64 @@
 // Importation de la fonction getWorks de script.js
 import { getWorks } from "./script.js";
 
-// Event listener sur le bouton "modifier" pour apparition de la modale "modifier"
-const modifyModal = document.getElementById("modify-modal");
-const modifyButton = document.querySelector(".modify-button");
-modifyButton.addEventListener("click", () => {
-    modifyModal.showModal();
+// Constantes générales
+const modal = document.getElementById("modal");
+const modalHeaderTitle = document.getElementById("modal-header_title");
+const modalBody = document.getElementById("modal-body");
+const modalFooter = document.getElementById("modal-footer");
+const modalFooterButton = document.getElementById("modal-footer_button");
+
+// Fonction de réinitialisation de la modale
+function resetModal() {
+    modalHeaderTitle.innerText = "";
+    modalBody.innerHTML = "";
+    modalBody.className = "";
+    modalFooter.className = "";
+    modalFooterButton.className = "";
+}
+
+// Event listener sur le bouton "fermer"
+const closeButton = document.getElementById("close-button");
+closeButton.addEventListener("click", () => {
+    modal.close();
+    resetModal();
 });
 
-// Fonction d'affichage des projets sur la modale "modifier"
+// Event listener pour fermeture modale si clic en dehors de la modale
+modal.addEventListener("click", function (event) {
+    if (event.target === modal) {
+        modal.close();
+        resetModal();
+    }
+});
+
+// Event listener sur le bouton "modifier"
+const modifyButton = document.getElementById("modify-button");
+modifyButton.addEventListener("click", () => {
+    // Affichage de la modale
+    modal.showModal();
+    // Appel de la fonction de mise en page de la modale "Galerie photo"
+    displayGalleryModal();
+
+});
+
+// Fonction de mise en page de la modale "Galerie photo"
+function displayGalleryModal() {
+    // Ajout du titre
+    modalHeaderTitle.innerText = "Galerie photo";
+    // Application de la mise en page du body 
+    modalBody.classList.add("modal-gallery");
+    // Appel de la fonction d'affichage des projets
+    displayModalWorks();
+    // Ajout du bouton "Ajouter une photo"
+    modalFooterButton.innerText = "Ajouter une photo";
+    modalFooterButton.classList.add("add-picture_button");
+}
+
+// Fonction d'affichage des projets sur la modale "Galerie photo"
 async function displayModalWorks() {
     // Récupération de la constante "works" par appel de la fonction "getWorks"
     const works = await getWorks();
-    // Récupération de l'élément du DOM qui affichera les projets
-    const modalGallery = document.getElementById("modal-gallery");
     // Boucle qui permet de générer les projets
     for (const work of works) {
         // Création de la balise <figure> dédiée à un projet
@@ -24,23 +69,111 @@ async function displayModalWorks() {
         workImage.src = work.imageUrl;
         workImage.alt = work.title;
         // Rattachement des balises aux parents
-        modalGallery.appendChild(workElement);
+        modalBody.appendChild(workElement);
         workElement.appendChild(workImage);
     }
 }
-// Appel de la fonction d'affichage des projets sur la modale "modifier"
-displayModalWorks();
 
-// Event listener sur le bouton "fermer"
-const anyModal = document.querySelector("dialog");
-const closeButton = document.querySelector(".close-button");
-closeButton.addEventListener("click", () => {
-    anyModal.close();
-});
-
-// Event listener pour fermeture modale si clic en dehors de la modale
-anyModal.addEventListener("click", function (event) {
-    if (event.target === anyModal) {
-        anyModal.close();
+// Event listener sur le bouton "Ajouter une photo"
+modalFooterButton.addEventListener("click", () => {
+    if (modalFooterButton.className === "add-picture_button") {
+        // Appel de la fonction de mise en page de la modale "Ajout photo"
+        displayAddWorkModal();
     }
 });
+
+// Fonction de mise en page de la modale "Ajout photo"
+function displayAddWorkModal() {
+    // Appel de la fonction de réinitialisation de la modale
+    resetModal();
+    // Ajout du titre
+    modalHeaderTitle.innerText = "Ajout photo";
+    // Ajout du body
+    // Création du formulaire
+    const addWorkForm = document.createElement("form");
+    addWorkForm.action = "#";
+    addWorkForm.method = "post";
+    addWorkForm.classList.add("modal-form");
+    // Création de la <div> d'upload d'image
+    const addWorkElement = document.createElement("div");
+    addWorkElement.classList.add("add-work_element");
+    // Création de l'icône d'image
+    const addWorkPicture = document.createElement("img");
+    addWorkPicture.src = "./assets/icons/picture.svg";
+    addWorkPicture.alt = "icône d'ajout d'une photo";
+    // Création du label et du bouton d'upload (qui sera caché)
+    const addworkLabel = document.createElement("label");
+    addworkLabel.htmlFor = "work-upload_button";
+    addworkLabel.innerText = "+ Ajouter photo";
+    addworkLabel.id = "work-upload_label";
+    const addWorkButton = document.createElement("input");
+    addWorkButton.type = "file";
+    addWorkButton.accept = ".jpg, .jpeg, .png"
+    addWorkButton.name = "work-upload_button";
+    addWorkButton.id = "work-upload_button";
+    addWorkButton.style = "display: none";
+    // Création de la légende
+    const addWorkCaption = document.createElement("p");
+    addWorkCaption.innerText = "jpg, png : 4mo max";
+    // Création du label et du champ "Titre"
+    const workTitleLabel = document.createElement("label");
+    workTitleLabel.htmlFor = "work-title";
+    workTitleLabel.innerText = "Titre";
+    const workTitleInput = document.createElement("input");
+    workTitleInput.type = "text";
+    workTitleInput.name = "work-title";
+    workTitleInput.id = "work-title";
+    // Création du label et du champ "Catégories"
+    const workCategoryLabel = document.createElement("label");
+    workCategoryLabel.htmlFor = "work-category";
+    workCategoryLabel.innerText = "Catégorie";
+    const workCategorySelect = document.createElement("select");
+    workCategorySelect.name = "work-category";
+    workCategorySelect.id = "work-category";
+    const workCategoryOption1 = document.createElement("option");
+    workCategoryOption1.value = "category1";
+    workCategoryOption1.innerText = "Catégorie 1";
+    const workCategoryOption2 = document.createElement("option");
+    workCategoryOption2.value = "category2";
+    workCategoryOption2.innerText = "Catégorie 2";
+    // Rattachement des éléments aux parents
+    modalBody.appendChild(addWorkForm);
+    addWorkForm.appendChild(addWorkElement)
+    addWorkElement.appendChild(addWorkPicture);
+    addWorkElement.appendChild(addworkLabel);
+    addWorkElement.appendChild(addWorkButton);
+    addWorkElement.appendChild(addWorkCaption);
+    addWorkForm.appendChild(workTitleLabel);
+    addWorkForm.appendChild(workTitleInput);
+    addWorkForm.appendChild(workCategoryLabel);
+    addWorkForm.appendChild(workCategorySelect);
+    workCategorySelect.appendChild(workCategoryOption1);
+    workCategorySelect.appendChild(workCategoryOption2);
+    // Ajout du bouton "Valider"
+    modalFooterButton.innerText = "Valider";
+    modalFooterButton.classList.add("validate_button");
+
+    // Event listener sur le bouton d'upload de l'image pour afficher la prévisualisation
+    addWorkButton.addEventListener("change", displayWorkPreview);
+
+    // Fonction d'affichage de la prévisualisation de l'image sélectionnée
+    function displayWorkPreview() {
+        // Récupération de la <div> d'upload d'image
+        const workPreviewElement = document.querySelector(".add-work_element");
+        // Changement de classe de la <div>
+        workPreviewElement.classList.replace("add-work_element", "work-preview_element");
+        // Effaçage du contenu de la <div>
+        workPreviewElement.innerHTML = "";
+        // Création de la balise <img> pour la preview
+        const workPreview = document.createElement("img");
+        // Récupération de l'image sélectionée en tant que source pour la balise <img>
+        workPreview.src = URL.createObjectURL(addWorkButton.files[0]);
+        // Rattachement de l'élement au parent
+        workPreviewElement.appendChild(workPreview);
+        // Test retour
+        console.log(addWorkButton.files[0]);
+    }
+}
+
+// Cacher le bouton submit du form, possibilité de rediriger le bouton du footer vers le bouton submit ?
+// (Comme pour l'input file)

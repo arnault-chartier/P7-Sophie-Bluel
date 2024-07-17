@@ -1,3 +1,5 @@
+/* Aspect général de la modale */
+
 dialog {
     height: 688px;
     width: 630px;
@@ -17,16 +19,16 @@ dialog::backdrop {
     background: rgba(0, 0, 0, 0.3);
 }
 
-.modal-header {
+#modal-header {
     width: 100%;
 }
 
-.modal-header_close {
+#modal-header_buttons {
     display: flex;
     flex-direction: row-reverse;
 }
 
-.close-button {
+#close-button {
     height: 24px;
     width: 24px;
     padding: 0;
@@ -39,17 +41,44 @@ dialog::backdrop {
     margin: 12px 16px;
 }
 
-h3 {
+#modal-header_title {
     font-size: 26px;
     text-align: center;
 }
 
-.modal-body {
+#modal-body {
+    width: 100%;
     box-sizing: border-box;
     padding: 0 91px;
 }
 
-#modal-gallery {
+#modal-footer {
+    display: flex;
+    flex-direction: column;
+}
+
+#modal-footer hr {
+    width: 420px;
+    border-color: #B3B3B3;
+}
+
+#modal-footer_button {
+    font-family: 'Syne';
+    font-weight: 700;
+    color: white;
+    background-color: #1D6154;
+    margin: 31px auto;
+    text-align: center;
+    padding: 10px;
+    width: 237px;
+    border: none;
+    border-radius: 60px;
+    cursor: pointer;
+}
+
+/* Modale "Galerie photo" */
+
+.modal-gallery {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -57,29 +86,69 @@ h3 {
     grid-row-gap: 29px;
 }
 
-#modal-gallery img {
+.modal-gallery img {
     width: 100%;
 }
 
-.modal-footer {
+/* Modale "Ajout photo" */
+
+#modal-body form {
     display: flex;
     flex-direction: column;
 }
 
-.modal-footer hr {
-    width: 420px;
-    border-color: #B3B3B3;
+.add-work_element {
+    height: 169px;
+    background-color: #E8F1F6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
 }
 
-.modal-footer button {
-    font-family: 'Syne';
-    font-weight: 700;
-    color: white;
-    background-color: #1D6154;
-    margin: 31px auto;
+.add-work_element p {
+    font-size: 10px;
+}
+
+.modal-form input,
+.modal-form select {
+    height: 50px;
+    font-size: 1.2em;
+    border: none;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.modal-form label {
+    margin: 2em 0 1em 0;
+}
+
+#work-upload_label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #306685;
+    background-color: #CBD6DC;
     text-align: center;
-    padding: 10px 49px;
+    margin: 0;
+    padding: 10px 0;
+    width: 173px;
     border: none;
     border-radius: 60px;
     cursor: pointer;
+}
+
+.work-preview_element {
+    height: 169px;
+    background-color: #E8F1F6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.work-preview_element img {
+    height: 169px;
+}
+
+#modal-footer_button.validate_button {
+    background-color: #A7A7A7;
 }

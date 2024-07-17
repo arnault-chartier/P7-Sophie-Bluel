@@ -54,7 +54,7 @@
 		</section>
 		<section id="portfolio">
 			<h2>Mes Projets
-				<button type="button" class="hidden admin-element modify-button">
+				<button id="modify-button" type="button" class="hidden admin-element">
 					<img src="./assets/icons/modify.svg" alt="icône du bouton modifier">modifier
 				</button>
 			</h2>
@@ -83,19 +83,19 @@
 			</ul>
 		</nav>
 	</footer>
-	<dialog id="modify-modal">
-		<div class="modal-header">
-			<div class="modal-header_close">
-				<button autofocus class="close-button">
+	<dialog id="modal">
+		<div id="modal-header">
+			<div id="modal-header_buttons">
+				<button autofocus id="close-button">
 					<img src="./assets/icons/close.svg" alt="icône du bouton fermer la modale">
 				</button>
 			</div>
-			<h3>Galerie photo</h3>
+			<h3 id="modal-header_title"></h3>
 		</div>
-		<div class="modal-body" id="modal-gallery"></div>
-		<div class="modal-footer">
+		<div id="modal-body"></div>
+		<div id="modal-footer">
 			<hr>
-			<button>Ajouter une photo</button>
+			<button id="modal-footer_button" type="button"></button>
 		</div>
 	</dialog>
 </body>

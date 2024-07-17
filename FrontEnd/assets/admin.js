@@ -26,5 +26,5 @@ function adminMode() {
         })
     }
 }
-// Appel de la fonction "mode édition"
+// Appel de la fonction "mode Admin"
 adminMode();

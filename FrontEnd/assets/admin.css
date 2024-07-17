@@ -26,7 +26,7 @@
     color: white;
 }
 
-.modify-button {
+#modify-button {
     border: none;
     background-color: white;
     font-family: "Work Sans";
@@ -36,10 +36,10 @@
     cursor: pointer;
 }
 
-.modify-button img {
+#modify-button img {
     padding-right: 10px;
 }
 
-.modify-button:hover {
+#modify-button:hover {
     font-weight: 800;
 }
