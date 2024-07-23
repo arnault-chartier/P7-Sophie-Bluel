@@ -1,8 +1,11 @@
-// Importation de la fonction getWorks de script.js
+// Importation des fonctions getWorks et getCategories de script.js
 import { getWorks } from "./script.js";
+import { getCategories } from "./script.js";
 
 // Constantes générales
+const token = window.localStorage.getItem("token");
 const modal = document.getElementById("modal");
+const backButton = document.getElementById("back-button");
 const modalHeaderTitle = document.getElementById("modal-header_title");
 const modalBody = document.getElementById("modal-body");
 const modalFooter = document.getElementById("modal-footer");
@@ -10,6 +13,7 @@ const modalFooterButton = document.getElementById("modal-footer_button");
 
 // Fonction de réinitialisation de la modale
 function resetModal() {
+    backButton.style = "";
     modalHeaderTitle.innerText = "";
     modalBody.innerHTML = "";
     modalBody.className = "";
@@ -41,6 +45,12 @@ modifyButton.addEventListener("click", () => {
     displayGalleryModal();
 
 });
+
+// Event listener sur le bouton de retour
+backButton.addEventListener("click", () => {
+    resetModal();
+    displayGalleryModal();
+})
 
 // Fonction de mise en page de la modale "Galerie photo"
 function displayGalleryModal() {
@@ -86,6 +96,8 @@ modalFooterButton.addEventListener("click", () => {
 function displayAddWorkModal() {
     // Appel de la fonction de réinitialisation de la modale
     resetModal();
+    // Affichage du bouton de retour
+    backButton.style.visibility = "visible";
     // Ajout du titre
     modalHeaderTitle.innerText = "Ajout photo";
     // Ajout du body
@@ -101,7 +113,7 @@ function displayAddWorkModal() {
     const addWorkPicture = document.createElement("img");
     addWorkPicture.src = "./assets/icons/picture.svg";
     addWorkPicture.alt = "icône d'ajout d'une photo";
-    // Création du label et du bouton d'upload (qui sera caché)
+    // Création du <label> et du bouton d'upload (qui sera caché)
     const addworkLabel = document.createElement("label");
     addworkLabel.htmlFor = "work-upload_button";
     addworkLabel.innerText = "+ Ajouter photo";
@@ -111,11 +123,12 @@ function displayAddWorkModal() {
     addWorkButton.accept = ".jpg, .jpeg, .png"
     addWorkButton.name = "work-upload_button";
     addWorkButton.id = "work-upload_button";
+    addWorkButton.required = true;
     addWorkButton.style = "display: none";
     // Création de la légende
     const addWorkCaption = document.createElement("p");
     addWorkCaption.innerText = "jpg, png : 4mo max";
-    // Création du label et du champ "Titre"
+    // Création du <label> et du champ "Titre"
     const workTitleLabel = document.createElement("label");
     workTitleLabel.htmlFor = "work-title";
     workTitleLabel.innerText = "Titre";
@@ -123,19 +136,16 @@ function displayAddWorkModal() {
     workTitleInput.type = "text";
     workTitleInput.name = "work-title";
     workTitleInput.id = "work-title";
-    // Création du label et du champ "Catégories"
+    workTitleInput.required = true;
+    // Création du <label> et du champ <select> "Catégories"
     const workCategoryLabel = document.createElement("label");
     workCategoryLabel.htmlFor = "work-category";
     workCategoryLabel.innerText = "Catégorie";
     const workCategorySelect = document.createElement("select");
     workCategorySelect.name = "work-category";
     workCategorySelect.id = "work-category";
-    const workCategoryOption1 = document.createElement("option");
-    workCategoryOption1.value = "category1";
-    workCategoryOption1.innerText = "Catégorie 1";
-    const workCategoryOption2 = document.createElement("option");
-    workCategoryOption2.value = "category2";
-    workCategoryOption2.innerText = "Catégorie 2";
+    // Affichage des <option> du champs <select> par appel de la fonction displayWorkCategory
+    displayWorkCategory();
     // Rattachement des éléments aux parents
     modalBody.appendChild(addWorkForm);
     addWorkForm.appendChild(addWorkElement)
@@ -147,11 +157,24 @@ function displayAddWorkModal() {
     addWorkForm.appendChild(workTitleInput);
     addWorkForm.appendChild(workCategoryLabel);
     addWorkForm.appendChild(workCategorySelect);
-    workCategorySelect.appendChild(workCategoryOption1);
-    workCategorySelect.appendChild(workCategoryOption2);
     // Ajout du bouton "Valider"
     modalFooterButton.innerText = "Valider";
-    modalFooterButton.classList.add("validate_button");
+    modalFooterButton.classList.add("greyed");
+
+    // Fonction d'affichage des <option> de catégories pour le champs <select>
+    async function displayWorkCategory() {
+        // Récupération de la constante "categories" par appel de la fonction "getCategories"
+        const categories = await getCategories();
+        // Boucle qui permet de générer les options de catégories
+        for (const category of categories) {
+            // Création de la balise <option>
+            const workCategoryOption = document.createElement("option");
+            workCategoryOption.value = category.id;
+            workCategoryOption.innerText = category.name;
+            // Rattachement de la balise au parent
+            workCategorySelect.appendChild(workCategoryOption);
+        }
+    }
 
     // Event listener sur le bouton d'upload de l'image pour afficher la prévisualisation
     addWorkButton.addEventListener("change", displayWorkPreview);
@@ -170,10 +193,18 @@ function displayAddWorkModal() {
         workPreview.src = URL.createObjectURL(addWorkButton.files[0]);
         // Rattachement de l'élement au parent
         workPreviewElement.appendChild(workPreview);
-        // Test retour
-        console.log(addWorkButton.files[0]);
     }
-}
 
-// Cacher le bouton submit du form, possibilité de rediriger le bouton du footer vers le bouton submit ?
-// (Comme pour l'input file)
+    // Event listener sur le bouton "Valider" pour envoi du formulaire à l'API
+    modalFooterButton.addEventListener("click", async () => {
+        const formData = new FormData();
+        formData.append("image", addWorkButton.files[0]);
+        formData.append("title", workTitleInput.value);
+        formData.append("category", workCategorySelect.value);
+        await fetch("http://localhost:5678/api/works", {
+            method: "POST",
+            headers: { "Authorization": `Bearer ${token}` },
+            body: formData,
+        });
+    })
+}

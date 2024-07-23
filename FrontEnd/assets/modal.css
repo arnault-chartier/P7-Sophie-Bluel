@@ -25,7 +25,7 @@ dialog::backdrop {
 
 #modal-header_buttons {
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: space-between;
 }
 
 #close-button {
@@ -92,6 +92,20 @@ dialog::backdrop {
 
 /* Modale "Ajout photo" */
 
+#back-button {
+    height: 24px;
+    width: 24px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin: 12px 16px;
+    visibility: hidden;
+}
+
 #modal-body form {
     display: flex;
     flex-direction: column;
@@ -114,7 +128,9 @@ dialog::backdrop {
 .modal-form input,
 .modal-form select {
     height: 50px;
-    font-size: 1.2em;
+    font-family: Work Sans;
+    font-size: 14px;
+    padding: 0 16px;
     border: none;
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
@@ -149,6 +165,6 @@ dialog::backdrop {
     height: 169px;
 }
 
-#modal-footer_button.validate_button {
+#modal-footer_button.greyed {
     background-color: #A7A7A7;
 }

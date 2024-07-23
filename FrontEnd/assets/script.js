@@ -42,7 +42,7 @@ displayWorks();
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Fonction de récupération des catégories depuis l'API
-async function getCategories() {
+export async function getCategories() {
     const categoriesResponse = await fetch("http://localhost:5678/api/categories");
     const categories = await categoriesResponse.json();
     return categories;
