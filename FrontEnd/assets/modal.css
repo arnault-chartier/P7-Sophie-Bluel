@@ -62,7 +62,7 @@ dialog::backdrop {
     border-color: #B3B3B3;
 }
 
-#modal-footer_button {
+.modal-footer_button {
     font-family: 'Syne';
     font-weight: 700;
     color: white;
@@ -86,8 +86,22 @@ dialog::backdrop {
     grid-row-gap: 29px;
 }
 
-.modal-gallery img {
+.modal-gallery figure {
+    position: relative;
+}
+
+.work-picture {
     width: 100%;
+}
+
+.delete-button {
+    position: absolute;
+    right: 5px;
+    top: 6px;
+    background-color: black;
+    padding: 3px 4px;
+    border-radius: 2px;
+    cursor: pointer;
 }
 
 /* Modale "Ajout photo" */

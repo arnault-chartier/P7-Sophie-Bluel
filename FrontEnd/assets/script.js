@@ -11,7 +11,7 @@ export async function getWorks() {
 }
 
 // Fonction d'affichage des projets récupérés depuis l'API
-async function displayWorks() {
+export async function displayWorks() {
     // Récupération de la constante "works" par appel de la fonction "getWorks"
     const works = await getWorks();
     // Récupération de l'élément du DOM qui affichera les projets

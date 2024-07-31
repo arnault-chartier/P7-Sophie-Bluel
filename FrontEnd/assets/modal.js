@@ -1,15 +1,16 @@
 // Importation des fonctions getWorks et getCategories de script.js
 import { getWorks } from "./script.js";
 import { getCategories } from "./script.js";
+import { displayWorks } from "./script.js";
 
 // Constantes générales
 const token = window.localStorage.getItem("token");
 const modal = document.getElementById("modal");
-const backButton = document.getElementById("back-button");
 const modalHeaderTitle = document.getElementById("modal-header_title");
 const modalBody = document.getElementById("modal-body");
 const modalFooter = document.getElementById("modal-footer");
-const modalFooterButton = document.getElementById("modal-footer_button");
+const addPictureButton = document.getElementById("add-picture_button");
+const validateButton = document.getElementById("validate_button");
 
 // Fonction de réinitialisation de la modale
 function resetModal() {
@@ -18,21 +19,23 @@ function resetModal() {
     modalBody.innerHTML = "";
     modalBody.className = "";
     modalFooter.className = "";
-    modalFooterButton.className = "";
+
 }
 
 // Event listener sur le bouton "fermer"
 const closeButton = document.getElementById("close-button");
 closeButton.addEventListener("click", () => {
-    modal.close();
     resetModal();
+    modal.close();
+    displayWorks();
 });
 
 // Event listener pour fermeture modale si clic en dehors de la modale
 modal.addEventListener("click", function (event) {
     if (event.target === modal) {
-        modal.close();
         resetModal();
+        modal.close();
+        displayWorks();
     }
 });
 
@@ -41,14 +44,18 @@ const modifyButton = document.getElementById("modify-button");
 modifyButton.addEventListener("click", () => {
     // Affichage de la modale
     modal.showModal();
+    // Appel de la fonction de réinitialisation de la modale
+    resetModal();
     // Appel de la fonction de mise en page de la modale "Galerie photo"
     displayGalleryModal();
-
 });
 
 // Event listener sur le bouton de retour
+const backButton = document.getElementById("back-button");
 backButton.addEventListener("click", () => {
+    // Appel de la fonction de réinitialisation de la modale
     resetModal();
+    // Appel de la fonction de mise en page de la modale "Galerie photo"
     displayGalleryModal();
 })
 
@@ -60,9 +67,10 @@ function displayGalleryModal() {
     modalBody.classList.add("modal-gallery");
     // Appel de la fonction d'affichage des projets
     displayModalWorks();
-    // Ajout du bouton "Ajouter une photo"
-    modalFooterButton.innerText = "Ajouter une photo";
-    modalFooterButton.classList.add("add-picture_button");
+    // Affichage du bouton "Ajouter une photo"
+    addPictureButton.style.display = "block";
+    // Masquage du bouton "Valider"
+    validateButton.style.display = "none";
 }
 
 // Fonction d'affichage des projets sur la modale "Galerie photo"
@@ -73,23 +81,41 @@ async function displayModalWorks() {
     for (const work of works) {
         // Création de la balise <figure> dédiée à un projet
         const workElement = document.createElement("figure");
-        workElement.id = work.id;
-        // Création de la balise <img>
-        const workImage = document.createElement("img");
-        workImage.src = work.imageUrl;
-        workImage.alt = work.title;
+        // Création de la balise <img> pour la photo
+        const workPicture = document.createElement("img");
+        workPicture.classList.add("work-picture");
+        workPicture.src = work.imageUrl;
+        workPicture.alt = work.title;
+        // Création de la balise <img> pour le bouton "supprimer"
+        const deleteButton = document.createElement("img");
+        deleteButton.id = work.id;
+        deleteButton.classList.add("delete-button");
+        deleteButton.src = "./assets/icons/trash.svg";
+        deleteButton.alt = "icône de suppression de l'image";
         // Rattachement des balises aux parents
         modalBody.appendChild(workElement);
-        workElement.appendChild(workImage);
+        workElement.appendChild(workPicture);
+        workElement.appendChild(deleteButton);
+        // Event listener sur les boutons "supprimer un projet"
+        deleteButton.addEventListener("click", async () => {
+            // Fetch pour supression d'un projet
+            const response = await fetch("http://localhost:5678/api/works/" + deleteButton.id, {
+                method: "DELETE",
+                headers: { "Authorization": `Bearer ${token}` },
+            });
+            // Si la réponse de l'API est positive (projet supprimé)
+            if (response.status === 204) {
+                resetModal();
+                displayGalleryModal();
+            }
+        })
     }
 }
 
 // Event listener sur le bouton "Ajouter une photo"
-modalFooterButton.addEventListener("click", () => {
-    if (modalFooterButton.className === "add-picture_button") {
-        // Appel de la fonction de mise en page de la modale "Ajout photo"
-        displayAddWorkModal();
-    }
+addPictureButton.addEventListener("click", () => {
+    // Appel de la fonction de mise en page de la modale "Ajout photo"
+    displayAddWorkModal();
 });
 
 // Fonction de mise en page de la modale "Ajout photo"
@@ -157,9 +183,10 @@ function displayAddWorkModal() {
     addWorkForm.appendChild(workTitleInput);
     addWorkForm.appendChild(workCategoryLabel);
     addWorkForm.appendChild(workCategorySelect);
-    // Ajout du bouton "Valider"
-    modalFooterButton.innerText = "Valider";
-    modalFooterButton.classList.add("greyed");
+    // Masquage du bouton "Ajouter une photo"
+    addPictureButton.style.display = "none";
+    // Affichage du bouton "Valider"
+    validateButton.style.display = "block";
 
     // Fonction d'affichage des <option> de catégories pour le champs <select>
     async function displayWorkCategory() {
@@ -196,15 +223,22 @@ function displayAddWorkModal() {
     }
 
     // Event listener sur le bouton "Valider" pour envoi du formulaire à l'API
-    modalFooterButton.addEventListener("click", async () => {
+    validateButton.addEventListener("click", async () => {
         const formData = new FormData();
         formData.append("image", addWorkButton.files[0]);
         formData.append("title", workTitleInput.value);
         formData.append("category", workCategorySelect.value);
-        await fetch("http://localhost:5678/api/works", {
+        const response = await fetch("http://localhost:5678/api/works", {
             method: "POST",
             headers: { "Authorization": `Bearer ${token}` },
             body: formData,
         });
+        // Si la réponse de l'API est positive (projet créé)
+        if (response.status === 201) {
+            document.querySelector(".modal-form").reset();
+            resetModal();
+            modal.close();
+            displayWorks();
+        }
     })
 }
