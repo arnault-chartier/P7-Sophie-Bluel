@@ -41,7 +41,7 @@ dialog::backdrop {
     margin: 12px 16px;
 }
 
-#modal-header_title {
+#modal-header h3 {
     font-size: 26px;
     text-align: center;
 }
@@ -78,7 +78,7 @@ dialog::backdrop {
 
 /* Modale "Galerie photo" */
 
-.modal-gallery {
+#gallery_element {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -86,7 +86,7 @@ dialog::backdrop {
     grid-row-gap: 29px;
 }
 
-.modal-gallery figure {
+#gallery_element figure {
     position: relative;
 }
 
@@ -117,15 +117,14 @@ dialog::backdrop {
     background: none;
     cursor: pointer;
     margin: 12px 16px;
-    visibility: hidden;
 }
 
-#modal-body form {
+#add-work_form {
     display: flex;
     flex-direction: column;
 }
 
-.add-work_element {
+#add-work_element {
     height: 169px;
     background-color: #E8F1F6;
     display: flex;
@@ -135,12 +134,12 @@ dialog::backdrop {
     gap: 7px;
 }
 
-.add-work_element p {
+#add-work_element p {
     font-size: 10px;
 }
 
-.modal-form input,
-.modal-form select {
+#add-work_form input,
+#add-work_form select {
     height: 50px;
     font-family: Work Sans;
     font-size: 14px;
@@ -149,7 +148,7 @@ dialog::backdrop {
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-.modal-form label {
+.form_label {
     margin: 2em 0 1em 0;
 }
 
@@ -167,7 +166,7 @@ dialog::backdrop {
     cursor: pointer;
 }
 
-.work-preview_element {
+#work-preview_element {
     height: 169px;
     background-color: #E8F1F6;
     display: flex;
@@ -175,10 +174,10 @@ dialog::backdrop {
     align-items: center;
 }
 
-.work-preview_element img {
+#work-preview_element img {
     height: 169px;
 }
 
-#modal-footer_button.greyed {
+#validate_button.greyed {
     background-color: #A7A7A7;
 }

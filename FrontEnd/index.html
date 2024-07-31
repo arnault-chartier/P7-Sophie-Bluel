@@ -93,13 +93,32 @@
 					<img src="./assets/icons/close.svg" alt="icône du bouton fermer la modale">
 				</button>
 			</div>
-			<h3 id="modal-header_title"></h3>
+			<h3 class="gallery_modal">Galerie photo</h3>
+			<h3 class="add-work_modal">Ajout photo</h3>
 		</div>
-		<div id="modal-body"></div>
+		<div id="modal-body">
+			<div id="gallery_element">
+			</div>
+			<form id="add-work_form" action="#" method="post">
+				<div id="add-work_element">
+					<img src="./assets/icons/picture.svg" alt="icône d'ajout d'une photo">
+					<label id="work-upload_label" for="work-upload_button">+ Ajouter photo</label>
+					<input type="file" accept=".jpg, .jpeg, .png" name="work-upload_button" id="work-upload_button"
+						style="display: none">
+					<p>jpg, png : 4mo max</p>
+				</div>
+				<div id="work-preview_element"></div>
+				<label for="work-title" class="form_label">Titre</label>
+				<input type="text" name="work-title" id="work-title">
+				<label for="work-category" class="form_label">Catégorie</label>
+				<select name="work-category" id="work-category"></select>
+			</form>
+		</div>
 		<div id="modal-footer">
 			<hr>
-			<button id="add-picture_button" class="modal-footer_button" type="button">Ajouter une photo</button>
-			<button id="validate_button" class="modal-footer_button" type="button">Valider</button>
+			<button id="add-picture_button" class="modal-footer_button gallery_modal" type="button">Ajouter une
+				photo</button>
+			<button id="validate_button" class="modal-footer_button add-work_modal" type="button">Valider</button>
 		</div>
 	</dialog>
 </body>
