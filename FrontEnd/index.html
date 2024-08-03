@@ -97,14 +97,12 @@
 			<h3 class="add-work_modal">Ajout photo</h3>
 		</div>
 		<div id="modal-body">
-			<div id="gallery_element">
-			</div>
+			<div id="gallery_element"></div>
 			<form id="add-work_form" action="#" method="post">
 				<div id="add-work_element">
 					<img src="./assets/icons/picture.svg" alt="icône d'ajout d'une photo">
 					<label id="work-upload_label" for="work-upload_button">+ Ajouter photo</label>
-					<input type="file" accept=".jpg, .jpeg, .png" name="work-upload_button" id="work-upload_button"
-						style="display: none">
+					<input type="file" accept=".jpg, .jpeg, .png" name="work-upload_button" id="work-upload_button">
 					<p>jpg, png : 4mo max</p>
 				</div>
 				<div id="work-preview_element"></div>
@@ -118,7 +116,8 @@
 			<hr>
 			<button id="add-picture_button" class="modal-footer_button gallery_modal" type="button">Ajouter une
 				photo</button>
-			<button id="validate_button" class="modal-footer_button add-work_modal" type="button">Valider</button>
+			<button id="validate_button" class="modal-footer_button add-work_modal greyed" type="button"
+				disabled>Valider</button>
 		</div>
 	</dialog>
 </body>

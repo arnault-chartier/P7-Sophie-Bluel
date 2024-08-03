@@ -1,5 +1,4 @@
 /* Aspect général de la modale */
-
 dialog {
     height: 688px;
     width: 630px;
@@ -49,7 +48,7 @@ dialog::backdrop {
 #modal-body {
     width: 100%;
     box-sizing: border-box;
-    padding: 0 91px;
+    padding: 46px 91px;
 }
 
 #modal-footer {
@@ -164,6 +163,10 @@ dialog::backdrop {
     border: none;
     border-radius: 60px;
     cursor: pointer;
+}
+
+#work-upload_button {
+    display: none;
 }
 
 #work-preview_element {
