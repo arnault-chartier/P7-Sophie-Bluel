@@ -75,8 +75,11 @@ dialog::backdrop {
     cursor: pointer;
 }
 
-/* Modale "Galerie photo" */
+.modal-footer_button:hover {
+    background-color: #0E2F28;
+}
 
+/* Modale "Galerie photo" */
 #gallery_element {
     width: 100%;
     display: grid;
@@ -104,7 +107,6 @@ dialog::backdrop {
 }
 
 /* Modale "Ajout photo" */
-
 #back-button {
     height: 24px;
     width: 24px;

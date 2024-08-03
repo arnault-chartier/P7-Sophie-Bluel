@@ -75,7 +75,7 @@ validateButton.addEventListener("click", async () => {
     });
     // Si la réponse de l'API est positive (projet créé)
     if (response.status === 201) {
-        closeModal()
+        closeModal();
     }
 })
 
