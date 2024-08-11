@@ -48,7 +48,15 @@ dialog::backdrop {
 #modal-body {
     width: 100%;
     box-sizing: border-box;
-    padding: 46px 91px;
+    padding: 45px 91px;
+}
+
+#error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 2em;
+    text-align: center;
+    display: none;
 }
 
 #modal-footer {

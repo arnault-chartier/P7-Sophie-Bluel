@@ -20,6 +20,7 @@ const workTitleInput = document.getElementById("work-title");
 const workCategorySelect = document.getElementById("work-category");
 const addPictureButton = document.getElementById("add-picture_button");
 const validateButton = document.getElementById("validate_button");
+const errorMessage = document.getElementById("error-message");
 
 // Event listener sur le bouton "modifier"
 modifyButton.addEventListener("click", () => {
@@ -30,12 +31,13 @@ modifyButton.addEventListener("click", () => {
 // Event listener sur le bouton "fermer"
 closeButton.addEventListener("click", () => {
     // Fermeture de la modale
-    closeModal()
+    closeModal();
 });
 
 // Event listener pour clic en dehors de la modale
 modal.addEventListener("click", function (event) {
     if (event.target === modal) {
+        // Fermeture de la modale
         closeModal();
     }
 });
@@ -76,6 +78,8 @@ validateButton.addEventListener("click", async () => {
     // Si la réponse de l'API est positive (projet créé)
     if (response.status === 201) {
         closeModal();
+    } else {
+        errorMessage.style.display = "block";
     }
 })
 
@@ -105,6 +109,11 @@ function resetValidateButton() {
     validateButton.classList.add("greyed");
 }
 
+// Fonction de réinitialisation du message d'erreur
+function resetErrorMessage() {
+    errorMessage.style.display = "none";
+}
+
 // Fonction d'ouverture de la modale
 function openModal() {
     // Ouverture de la modale
@@ -125,6 +134,8 @@ function closeModal() {
     resetCategories();
     // Réinitialisation du bouton "Valider"
     resetValidateButton();
+    // Réinitialisation du message d'erreur
+    resetErrorMessage();
     // Fermerture de la modale
     modal.close();
     // Affichage des travaux sur la page
@@ -187,6 +198,8 @@ async function displayModalWorks() {
                 closeModal();
                 // Ouverture de la modale
                 openModal();
+            } else {
+                errorMessage.style.display = "block";
             }
         })
     }
@@ -245,7 +258,7 @@ function displayWorkPreview() {
     workPreviewElement.style.display = "flex";
     // Création de la balise <img> pour la preview
     const workPreview = document.createElement("img");
-    // Récupération de l'image sélectionée en tant que source pour la balise <img>
+    // Récupération de l'image sélectionnée en tant que source pour la balise <img>
     workPreview.src = URL.createObjectURL(addWorkButton.files[0]);
     // Rattachement de l'élement au parent
     workPreviewElement.appendChild(workPreview);
